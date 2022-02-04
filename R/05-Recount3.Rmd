@@ -1,6 +1,5 @@
 ---
 title: "Recount3"
-author: "Mateo Maya Martínez"
 date: "2/2/2022"
 output: html_document
 ---
@@ -11,39 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Datos de RNA-seq a través de recount3
 
-## Procesar datos crudos (FASTQ) con SPEAQeasy
-
-<img src="http://research.libd.org/SPEAQeasy/images/4_workflow.png" width="800px"/>
-
-* Pre-print de diciembre 2020 https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1
-* Artículo de mayo 2021 https://doi.org/10.1186/s12859-021-04142-3
-* Documentación del software http://research.libd.org/SPEAQeasy/
-* Ejemplo de como usar el software y analizar los datos http://research.libd.org/SPEAQeasy-example/
-* Taller de 3 días (aprox 6 horas en total) sobre expresión diferencial usando estos datos https://lcolladotor.github.io/bioc_team_ds/differential-expression-analysis.html
-
-## Proyectos recount
-
-* `ReCount`: datos de unos 20 estudios
-    - http://bowtie-bio.sourceforge.net/recount/index.shtml
-    - Artículo del 2011 https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-449
-
-* `recount`: 70 mil muestras de RNA-seq uniformemente procesadas
-    - https://jhubiostatistics.shinyapps.io/recount/
-    - Documentación con `pkgdown`: http://leekgroup.github.io/recount/
-    - Documentación en Bioconductor: http://bioconductor.org/packages/recount
-    - Artículo principal de 2017 http://www.nature.com/nbt/journal/v35/n4/full/nbt.3838.html
-    - Artículo que explica porque las cuentas (_counts_) son diferentes a las usuales https://f1000research.com/articles/6-1558/v1
-    - Algunos análisis ejemplo que hicimos http://leekgroup.github.io/recount-analyses/
-
-* `recount3`: 700 mil muestras de RNA-seq de humano y ratón
-    - http://rna.recount.bio/
-    - Documentación con `pkgdown`: http://research.libd.org/recount3/
-    - Documentación en Bioconductor: http://bioconductor.org/packages/recount3
-    - Pre-print: mayo 2021 https://doi.org/10.1101/2021.05.21.445138
-    - Artículo: noviembre 2021 https://doi.org/10.1186/s13059-021-02533-6
-    
-* Ayuda a que todxs podamos analizar los datos sin importar quien tiene acceso a _high performance computing_ (HPC) (clústers para procesar datos).
-* Es como democratizar el acceso a los datos ^^
+Son datos procesados de manera uniforme.  
+COn el study explorer podemos encontrar sets de datos que nos interesen.  
+Democratiza el acceso a los datos. 
 
 ## Usar recount3
 
@@ -109,6 +78,7 @@ colData(rse_gene_SRP009615)[
 ]
 ```
 
+Las dos funciones más importantes al descargar datos de recount3 son ```compute_read_counts``` y ```expand_sra_attributes```
 
 Ahora estamos listos para usar otras herramientas para el análisis de los datos.
 
@@ -118,6 +88,8 @@ Ahora estamos listos para usar otras herramientas para el análisis de los datos
 * Utiliza `iSEE` para reproducir la siguiente imagen
 
 <img src="images/iSEE_SRP009615.PNG" width="500px" />
+
+```iSEE::iSEE(rse_gene_SRP009615)```
 
 * Pistas:
     - Utiliza el _dynamic feature selection_
@@ -134,21 +106,4 @@ Ahora estamos listos para usar otras herramientas para el análisis de los datos
     - https://twitter.com/AbhiNellore
     - https://twitter.com/Shannon_E_Ellis
     - https://twitter.com/jtleek
-* Más sobre los tipos de cuentas:
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">If I&#39;m using recount2 data for a differential analysis in DEseq2, should I be using the original counts, or the scaled counts?<a href="https://twitter.com/mikelove?ref_src=twsrc%5Etfw">@mikelove</a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/Bioconductor?src=hash&amp;ref_src=twsrc%5Etfw">#Bioconductor</a></p>&mdash; Dr. Robert M Flight, PhD (@rmflight) <a href="https://twitter.com/rmflight/status/1354981737525366786?ref_src=twsrc%5Etfw">January 29, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-* Ejemplos de tweets de la comunidad
-
-Un tweet de un alumno del 2021:
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a> <br>Earlier I was looking for some data to analyze in recount, they have so much, I seriously can&#39;t decide what to use! <a href="https://t.co/fIJwXq46Tz">https://t.co/fIJwXq46Tz</a><br><br>Thanks for such an useful package!<a href="https://twitter.com/chrisnwilks?ref_src=twsrc%5Etfw">@chrisnwilks</a> <a href="https://twitter.com/BenLangmead?ref_src=twsrc%5Etfw">@BenLangmead</a> <a href="https://twitter.com/KasperDHansen?ref_src=twsrc%5Etfw">@KasperDHansen</a> <a href="https://twitter.com/AbhiNellore?ref_src=twsrc%5Etfw">@AbhiNellore</a> <a href="https://twitter.com/Shannon_E_Ellis?ref_src=twsrc%5Etfw">@Shannon_E_Ellis</a> <a href="https://twitter.com/jtleek?ref_src=twsrc%5Etfw">@jtleek</a></p>&mdash; Axel Zagal Norman (@NormanZagal) <a href="https://twitter.com/NormanZagal/status/1364762134014398467?ref_src=twsrc%5Etfw">February 25, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-Explorando la posibilidad de hacer análisis con `recount3` (enero 2022):
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have found a novel exon expressed in a cancer sample. I would like to search TCGA/SRA to identify other samples with the same/similar exon. It will be rare. Can I use Recount3, megadepth for this? <a href="https://twitter.com/jtleek?ref_src=twsrc%5Etfw">@jtleek</a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a> <a href="https://twitter.com/BenLangmead?ref_src=twsrc%5Etfw">@BenLangmead</a></p>&mdash; Alicia Oshlack (@AliciaOshlack) <a href="https://twitter.com/AliciaOshlack/status/1478518895166119937?ref_src=twsrc%5Etfw">January 5, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-Un tweet de ayer (febrero 1, 2022):
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Thinking on this a bit it is strange how few people are doing “medium-sized” meta analyses of transcriptiomics. One on end you have <a href="https://twitter.com/BenLangmead?ref_src=twsrc%5Etfw">@BenLangmead</a> <a href="https://twitter.com/lcolladotor?ref_src=twsrc%5Etfw">@lcolladotor</a> reprocessing (with a touch of analysis) most of SRA. And you see papers pulling an dataset or two to corroborate.</p>&mdash; David McGaughey (@David_McGaughey) <a href="https://twitter.com/David_McGaughey/status/1488596806313431044?ref_src=twsrc%5Etfw">February 1, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
