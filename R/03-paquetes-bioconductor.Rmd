@@ -1,5 +1,6 @@
 ---
 title: "Paquetes bioconductor"
+date: "1/2/2022"
 output: html_document
 ---
 
@@ -9,19 +10,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## CellBarcode
 
-**Resumen:** Análisis de códigos de barras de DNA.
+**Resumen:** Análisis de códigos de barras de DNA.  
 **Utilidades:** Puede ser usado en estudios de rastreo de linajes y seguimiento de clones.    
-**Link:** https://bioconductor.org/packages/CellBarcode/  
+**Link:** https://bioconductor.org/packages/CellBarcode/   
 
 
-## Methylclock - DNA methylation-based clocks
+## Methylclock - DNA methylation-based clocks  
 
 **Resumen:** Estimar edad del reloj biológico y de metilación del DNA.   
-**Utilidades:** Podría usarse para calcular la edad del dna mitocondrial para análisis posteriores  
+**Utilidades:** Podría usarse para calcular la edad del dna mitocondrial para análisis posteriores.   
 **Link:** https://bioconductor.org/packages/methylclock/**  
 
 
-## rmspc
+## rmspc  
 **Resumen:** Multiple Sample Peak Calling, Analisis de resultados de ChIP-seq  
 **Observaciones:** No funciona en todas las plataformas.Tiene pocas dependencias  
 **Link:** http://bioconductor.org/packages/rmspc/
@@ -35,29 +36,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## microbiomeMarker
 **Resumen:** Facilita la identificacion de marcadores microbianos.   
-**Plataformas:** todas
-**Respuesta:** en ocasiones
+**Plataformas:** todas  
+**Respuesta:** en ocasiones  
 **Link:** 	https://bioconductor.org/packages/microbiomeMarker/  
 
 
 ## MicrobiomeProfiler
 **Resumen:** Ayuda al analisis de datos bacterianos.  
-**Plataformas:** todas
-**Respuesta:** no
+**Plataformas:** todas  
+**Respuesta:** no  
 **Link:** https://bioconductor.org/packages/MicrobiomeProfiler/  
 
 ## spatzie
 
 **Descripción:** identificación de motivos co-enriquecidos de interacciones enhancer-promotor  
 **Utilidades:** Definir grupos de interacciones y buscar pares de motivos enriquecidos.  
-Funciona en todas las plataformas.
-**Link:** http://bioconductor.org/packages/spatzie
+Funciona en todas las plataformas.  
+**Link:** http://bioconductor.org/packages/spatzie  
 
 
 ## monaLisa
 
 **Descripción:** Trabaja con motivos en el análisis de datos genómicos   
 **Utilidades:** Anotación de secuencias o  regiones genómicas con motivos que originan cambios en la expresión  
-Funciona en todas las plataformas
+Funciona en todas las plataformas   
 **Link:** http://bioconductor.org/packages/monaLisa
   
