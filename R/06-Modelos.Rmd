@@ -18,8 +18,8 @@ mat <- with(trees, model.matrix(log(Volume) ~ log(Height) + log(Girth)))
 mat
 colnames(mat)
 ```
-$$\beta$$1 es el cambio promedio en Y por cada incremento de una unidad en la variable x. 
-Por cada incremento de 1 en el eje x aumenta el valor de Y. 
+<span style="color:#1A5276"> Beta 1 es el cambio promedio en Y por cada incremento de una unidad en la variable x. 
+Por cada incremento de 1 en el eje x aumenta el valor de Y. </span>
 
 
 * ¿Cómo interpretamos los nombres de las columnas de `mat`?
@@ -28,15 +28,16 @@ Por cada incremento de 1 en el eje x aumenta el valor de Y.
 summary(lm(log(Volume) ~ log(Height) + log(Girth), data = trees))
 ```
 
-Cuando hacemos un modelo de expresión diferencial, si tenemos mil genes, vamos a hacer mil regresiones lineales. Como esto resultaría en muchas tablitas, únicamente extraeremos la información de un solo coeficiente (por ejemplo ```log Height``` en este caso). 
+<span style="color:#1A5276"> Cuando hacemos un modelo de expresión diferencial, si tenemos mil genes, vamos a hacer mil regresiones lineales. Como esto resultaría en muchas tablitas, únicamente extraeremos la información de un solo coeficiente (por ejemplo ```log Height``` en este caso).</span>  
 
 ## ExploreModelMatrix
 
 * Es un paquete de Bioconductor que nos ayuda a entender los modelos estadísticos que estamos usando gracias a visualizaciones http://www.bioconductor.org/packages/ExploreModelMatrix/ que está descrito en el siguiente artículo
 * Revisaremos los ejemplos en http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html
 
-Nos da una interfaz gráfica que nos ayuda a entender de mejor manera los modelos de regresión lineal.  
+<span style="color:#1A5276"> Nos da una interfaz gráfica que nos ayuda a entender de mejor manera los modelos de regresión lineal.  
 Modelo no full rank: Existen casos en donde no tenemos observaciones. 
+La interpretación para aislar alguno de los coeficientes es "dejarlo solito". Esto lo podemos lograr restando columnas y filas de la matriz. </span>
 
 ### Ejemplo 1
 
@@ -69,7 +70,7 @@ app <- ExploreModelMatrix(
 if (interactive()) shiny::runApp(app)
 ```
 
-Podemos restar "cuadrantes" para quedarnos solo con los coeficientes que necesitemos para dar una interpretación. 
+<span style="color:#1A5276"> Podemos "restar cuadrantes" para quedarnos solo con los coeficientes que necesitemos para dar una interpretación.</span> 
 
 ### Ejemplo 2
 
@@ -82,7 +83,13 @@ http://bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/
 ### Ejercicio
 
 * Interpreta `ResponseResistant.Treatmentpre` del ejercicio 2. Puede ser útil tomar un _screenshot_ (captura de pantalla) y anotarla con líneas de colores. Si haces eso, puedes incluir la imagen en tus notas.
+
+<span style="color:#1A5276"> Podemos aislar `ResponseResistant.Treatmentpre` restando las columnas 1 y 2, pero solo en el escenario en el que la respuesta es igual a resistente.</span>
+![](../figuras/Ejercicio1_modelos.jpeg)
+
+
 * ¿Por qué es clave el `0` al inicio de la fórmula en el ejercicio 3?
+<span style="color:#1A5276"> Al añadir el cero cambia la interpretación de los batches. Si queremos incluir cada uno de los batches es necesario incluir el 0+, si quisiéramos hacerlos relativos contra el batch 1, quitamos el 0+. </span>   
 
 ### Para aprender más
 
@@ -102,6 +109,7 @@ Vamos a usar datos de https://www.ncbi.nlm.nih.gov/sra/?term=SRP045638 procesado
 ```{r download_SRP045638}
 library("recount3")
 
+# Bajamos los datos de recount3 y hacemos un subset del estudio que nos interesa. 
 human_projects <- available_projects()
 
 rse_gene_SRP045638 <- create_rse(
@@ -110,18 +118,21 @@ rse_gene_SRP045638 <- create_rse(
         project == "SRP045638" & project_type == "data_sources"
     )
 )
+# Convertimos los datos crudos de recount3 en el numero de lecturas con la función compute_read_counts y los almacenamos en el assay que llamaremos counts. 
 assay(rse_gene_SRP045638, "counts") <- compute_read_counts(rse_gene_SRP045638)
 ```
 
 Una vez descargados y con los números de lecturas podemos usar `expand_sra_attributes()`. Sin embargo, tenemos un problema con estos datos.
 
 ```{r describe_issue}
+# Checamos la información, hay muestras tienen información que otras no. 
 rse_gene_SRP045638$sra.sample_attributes[1:3]
 ```
 
 Vamos a intentar resolverlo eliminando información que está presente solo en ciertas muestras.
 
 ```{r solve_issue}
+# Eliminamos la parte que nos da problemas.
 rse_gene_SRP045638$sra.sample_attributes <- gsub("dev_stage;;Fetal\\|", "", rse_gene_SRP045638$sra.sample_attributes)
 rse_gene_SRP045638$sra.sample_attributes[1:3]
 ```
@@ -153,7 +164,6 @@ summary(as.data.frame(colData(rse_gene_SRP045638)[
 ]))
 ```
 
-<a href="https://r4ds.had.co.nz/explore-intro.html"><img src="images/data-science-explore.png" width="800px" /></a>
 
 Ahora crearemos un par de variables para que las podamos usar en nuestro análisis.
 
@@ -242,16 +252,17 @@ mod <- model.matrix(~ prenatal + sra_attribute.RIN + sra_attribute.sex + assigne
 )
 colnames(mod)
 ```
-
+<span style="color:#1A5276"> En este caso, una de las columnas se llamna "prenatalprenatal" porque tenemos una variable que se llama "prenatal" que tiene dos opciones: pre y postnatal, si las ordenamos en orden alfabético va a ir primero postnatal, entonces será el valor de referencia. Este coeficiente nos muestra la diferencia de prenatal - postnatal. Nos está mostrando el contraste, no el grupo de referencia. </span>  
 
 Ya teniendo el modelo estadístico, podemos usar `limma` para realizar el análisis de expresión diferencial como tal.
 
 ```{r run_limma}
 library("limma")
-vGene <- voom(dge, mod, plot = TRUE)
+vGene <- voom(dge, mod, plot = TRUE) # Está gráfica ve la relación entre el promedio de expresión (x) y la varianza (y).
 
 eb_results <- eBayes(lmFit(vGene))
 
+# topTable nos sirve para escoger un coeficiente de nuestro interés. El número de columna de nuestro modelo. Los argumentos number y sort.by es necesario dejarlos siempre igual
 de_results <- topTable(
     eb_results,
     coef = 2,
@@ -280,7 +291,7 @@ de_results[de_results$gene_name %in% c("ZSCAN2", "VASH2", "KIAA0922"), ]
 
 De `vGene$E` podemos extraer los datos normalizados por `limma-voom`. Revisemos los top 50 genes diferencialmente expresados.
 
-```{r pheatmap}
+```{r pheatmap1}
 ## Extraer valores de los genes de interés
 exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 50, ]
 
@@ -293,7 +304,9 @@ colnames(df) <- c("AgeGroup", "RIN", "Sex")
 library("pheatmap")
 pheatmap(
     exprs_heatmap,
+    # Agrupar genes
     cluster_rows = TRUE,
+    # Agrupar muestras
     cluster_cols = TRUE,
     show_rownames = FALSE,
     show_colnames = FALSE,
@@ -333,7 +346,24 @@ Pistas:
 * Revisen la información de `rowRanges(rse_gene_SRP045638)` o `de_results`.
 * Exploren que hace la función `match()`.
 
+```{r pheatmap2}
+v <-match(rownames(exprs_heatmap), de_results$gene_id)
 
+nombres_humanos<-de_results$gene_name[v]
+
+rownames(exprs_heatmap) <- nombres_humanos
+
+pheatmap(exprs_heatmap, cluster_rows = TRUE, cluster_cols = TRUE, show_rownames = TRUE, show_colnames = FALSE, annotation_col = df)
+
+```
+
+
+```{r pdf}
+pdf("pheatmap_con_nombres.pdf", height = 14, useDingbats = FALSE)
+pheatmap(exprs_heatmap, cluster_rows = TRUE, cluster_cols = TRUE, show_rownames = TRUE, show_colnames = FALSE, annotation_col = df)
+
+dev.off()
+```
 ## Comunidad
 
 Algunxs de lxs autores de `ExploreModelMatrix`:
@@ -349,52 +379,3 @@ Algunxs de lxs autores de `edgeR` y `limma`:
 * https://twitter.com/markrobinsonca
 * https://twitter.com/AliciaOshlack
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">If you&#39;ve ever been dazed by design matrices or confused by contrasts when performing gene expression analysis in limma, the new article by Charity Law is for you <a href="https://t.co/ZSMOA20tdm">https://t.co/ZSMOA20tdm</a> <a href="https://twitter.com/hashtag/bioconductor?src=hash&amp;ref_src=twsrc%5Etfw">#bioconductor</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> (1/2)</p>&mdash; Matt Ritchie (@mritchieau) <a href="https://twitter.com/mritchieau/status/1338639551128952832?ref_src=twsrc%5Etfw">December 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-## Ejercicio: respuesta
-
-
-```{r respuesta, out.height="1100px"}
-## Tenemos que usar gene_id y gene_name
-rowRanges(rse_gene_SRP045638)
-
-## Con match() podemos encontrar cual es cual
-rownames(exprs_heatmap) <- rowRanges(rse_gene_SRP045638)$gene_name[
-    match(rownames(exprs_heatmap), rowRanges(rse_gene_SRP045638)$gene_id)
-]
-
-## Y luego podemos cambiar el valor de show_rownames de FALSE a TRUE
-pheatmap(
-    exprs_heatmap,
-    cluster_rows = TRUE,
-    cluster_cols = TRUE,
-    show_rownames = TRUE,
-    show_colnames = FALSE,
-    annotation_col = df
-)
-
-## Guardar la imagen en un PDF largo para poder ver los nombres de los genes
-pdf("pheatmap_con_nombres.pdf", height = 14, useDingbats = FALSE)
-pheatmap(
-    exprs_heatmap,
-    cluster_rows = TRUE,
-    cluster_cols = TRUE,
-    show_rownames = TRUE,
-    show_colnames = FALSE,
-    annotation_col = df
-)
-dev.off()
-```
-
-## Específicaciones del proyecto
-
-* Con datos de algún estudio disponible vía `recount3`, hagan un análisis de expresión diferencial.
-* Incluyan al menos 3 gráficas en su reporte.
-* Su reporte debe ser público y estar listado en [la página del curso](https://cursos.lcg.unam.mx/course/view.php?id=123#section-3).
-
-Suena fácil, pero cada estudio tiene sus complejidades.
-
-Hay muchos paquetes que no vimos que les pueden llamar la atención, tal como `r BiocStyle::Biocpkg("ideal")`. En http://research.libd.org/SPEAQeasy-example/bootcamp_intro pueden encontrar varias gráficas que tal vez les quieran reproducir. En fin, ¡esto solo es el inicio!
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">🎉🎉🎉Our new MS is finally out! Given the timing, Santa had an early round with us 🎅<br>💡<a href="https://t.co/a0dHFGWN7V">https://t.co/a0dHFGWN7V</a>, &quot;ideal: an R/Bioconductor package for interactive differential expression analysis&quot;.<br><br>I promise a proper <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> hexsticker will follow, for now enjoy the package 😉</p>&mdash; Federico Marini (@FedeBioinfo) <a href="https://twitter.com/FedeBioinfo/status/1336944561592078336?ref_src=twsrc%5Etfw">December 10, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

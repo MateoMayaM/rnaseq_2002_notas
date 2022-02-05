@@ -84,10 +84,11 @@ rse[1:2, ]
 rse[, c("A", "D", "F")]
 ```
 
-Con el comando 1, accesamos a los primeros dos genes (renglones) y a todas las columnas. También podríamos darle un vector de caracteres, en este caso sería rse[c("gene_1," "gene_2")].  
-Con el segundo comando accesamos a todos los genes (renglones) y únicamente a las columnas A, D, y F. También podemos darle números, para las columnas, por ejemplo 1:3 nos daría las columnas A,B,y C.  
+<span style="color:#1A5276"> Con el comando 1 accesamos a los primeros dos genes (renglones) y a todas las columnas. También podríamos darle un vector de caracteres, en este caso sería rse[c("gene_1," "gene_2")].  
+Con el segundo comando accesamos a todos los genes (renglones) y únicamente a las columnas A, D, y F. También podemos darle números, para las columnas, por ejemplo 1:3 nos daría las columnas A,B,y C. </span> 
 
-Podemos accesar nuestra variable de tratamiento con ```rse$Treatment```. Con ```rse[, rse$Treatment == "Input"]``` podemos acceder a nuestras muestras input.  
+<span style="color:#1A5276"> Podemos accesar nuestra variable de tratamiento con ```rse$Treatment```. Con ```rse[, rse$Treatment == "Input"]``` podemos acceder a nuestras muestras input.</span>  
+
 
 ***
 ## iSEE
@@ -103,13 +104,14 @@ iSEE::iSEE(rse)
 ```
 
 ### Información en iSEE.
-- Row data table 1: Nos da la información de los genes, con las variables que tenía nuestro objeto. Es interactiva y podemos buscar por nombre. 
-- Feature assay plot: Muestra información de un solo gen, a lo largo de las muestras. Nos da una gráfica estilo violín. Podemos recibir los datos de row data table 1, para que no sea tan difícilo buscar manualmente. Podemos agregar información de diferentes variables.
-- Column data plot 1: Grafica las variables que tenemos de nuestras muestras. 
-- Row data plot 1: Grafica información de la tabla de genes.
-- Sample assay plot 1: Muestra niveles de expresión a lo largo de una sola muestra, de todos los genes. 
-- Column data table 1: Explorar muestras.
-- Complex heatmap: Tenemos uno o más genes e información de las muestras. 
+
+<span style="color:#1A5276"> - Row data table 1: Nos da la información de los genes, con las variables que tenía nuestro objeto. Es interactiva y podemos buscar por nombre.</span>  
+<span style="color:#1A5276"> - Feature assay plot: Muestra información de un solo gen, a lo largo de las muestras. Nos da una gráfica estilo violín. Podemos recibir los datos de row data table 1, para que no sea tan difícilo buscar manualmente. Podemos agregar información de diferentes variables.</span>  
+<span style="color:#1A5276"> - Column data plot 1: Grafica las variables que tenemos de nuestras muestras.</span>  
+<span style="color:#1A5276"> - Row data plot 1: Grafica información de la tabla de genes. </span>  
+<span style="color:#1A5276"> - Sample assay plot 1: Muestra niveles de expresión a lo largo de una sola muestra, de todos los genes.</span>   
+<span style="color:#1A5276"> - Column data table 1: Explorar muestras. </span>  
+<span style="color:#1A5276"> - Complex heatmap: Tenemos uno o más genes e información de las muestras. </span>
 
 -
 ## Ejercicio con spatialLIBD
@@ -136,26 +138,15 @@ lobstr::obj_size(sce_layer) / 1024^2 ## Convertir a MB
 iSEE::iSEE(sce_layer)
 ```
 
-* Descarga un PDF que reproduzca la imagen del lado derecho de la siguiente diapositiva. Incluye ese PDF en tu repositorio de notas del curso.
-
-<script async class="speakerdeck-embed" data-slide="10" data-id="329db23f5f17460da31f45c7695a9f06" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+* Descarga un PDF que reproduzca la imagen del lado derecho de la siguiente diapositiva. Incluye ese PDF en tu repositorio de notas del curso.  
 
 * Explora en con un _heatmap_ la expresión de los genes `MOBP`, `MBP` y `PCP4`. Si hacemos un _clustering_ (agrupamos los genes), ¿cúales genes se parecen más?  
-MOBP y MBP son más similares.   
+<span style="color:#1A5276"> MOBP y MBP son más similares.</span>     
 * ¿En qué capas se expresan más los genes _MOBP_ y _MBP_?  
-En la capa white matter, porque son genes marcadores de glía.  
+<span style="color:#1A5276"> En la capa white matter, porque son genes marcadores de glía.>/span>      
 
 ```
 ENSG00000168314
 ENSG00000183036
 ENSG00000197971
 ```
-
-## Comunidad
-
-Autores de `iSEE`:
-
-* https://twitter.com/KevinRUE67
-* https://twitter.com/FedeBioinfo
-* https://twitter.com/CSoneson
-* Aaron Lun https://orcid.org/0000-0002-3564-4813

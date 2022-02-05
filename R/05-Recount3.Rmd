@@ -10,22 +10,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Datos de RNA-seq a través de recount3
 
-Son datos procesados de manera uniforme.  
-COn el study explorer podemos encontrar sets de datos que nos interesen.  
-Democratiza el acceso a los datos. 
+<span style="color:#1A5276">Son datos procesados de manera uniforme.  
+Con el study explorer podemos encontrar sets de datos que nos interesen.  
+Democratiza el acceso a los datos.</span>   
 
 ## Usar recount3
 
 _Check the original documentation in English [here](http://rna.recount.bio/docs/quick-access.html#quick-recount3) and [here](http://rna.recount.bio/docs/bioconductor.html#recount3)._
 
-Primero cargamos el paquete de R que automáticamente carga todas las dependencias incluyendo a `SummarizedExperiment`.
+Primero cargamos el paquete de R que automáticamente carga todas las dependencias incluyendo a `SummarizedExperiment`. 
 
 ```{r 'start', message=FALSE}
 ## Load recount3 R package
 library("recount3")
 ```
 
-Después tenemos que identificar un estudio de interes y determinar si queremos accesar la información a nivel de genes, exones, etc. Sabiendo el estudio de interes, podemos descargar los datos usando la función `create_rse()` como mostramos a continuación. `create_rse()` tiene argumentos con los cuales podemos especificar la **anotación** que queremos usar (las opciones dependen del organismo).
+Después tenemos que identificar un estudio de interes y determinar si queremos accesar la información a nivel de genes, exones, etc. Sabiendo el estudio de interes, podemos descargar los datos usando la función `create_rse()` como mostramos a continuación. `create_rse()` tiene argumentos con los cuales podemos especificar la **anotación** que queremos usar (las opciones dependen del organismo). 
 
 
 ```{r 'quick_example'}
@@ -78,7 +78,7 @@ colData(rse_gene_SRP009615)[
 ]
 ```
 
-Las dos funciones más importantes al descargar datos de recount3 son ```compute_read_counts``` y ```expand_sra_attributes```
+<span style="color:#1A5276">Las dos funciones más importantes al descargar datos de recount3 son ```compute_read_counts``` y ```expand_sra_attributes```</span>  
 
 Ahora estamos listos para usar otras herramientas para el análisis de los datos.
 
@@ -86,10 +86,8 @@ Ahora estamos listos para usar otras herramientas para el análisis de los datos
 ## Ejercicio
 
 * Utiliza `iSEE` para reproducir la siguiente imagen
-
-<img src="images/iSEE_SRP009615.PNG" width="500px" />
-
-```iSEE::iSEE(rse_gene_SRP009615)```
+```iSEE::iSEE(rse_gene_SRP009615)```  
+<span style="color:#1A5276">La imagen está en ISEE_exports/FeatureAssayPlot1.pdf </span>
 
 * Pistas:
     - Utiliza el _dynamic feature selection_
