@@ -407,9 +407,9 @@ rse[, c(&quot;A&quot;, &quot;D&quot;, &quot;F&quot;)]</code></pre>
 ## rowData names(1): feature_id
 ## colnames(3): A D F
 ## colData names(1): Treatment</code></pre>
-<p><span style="color:#1A5276"> Con el comando 1 accesamos a los primeros dos genes (renglones) y a todas las columnas. También podríamos darle un vector de caracteres, en este caso sería rse[c(“gene_1,” “gene_2”)].<br />
+<p><span style="color:#E67E22"> Con el comando 1 accesamos a los primeros dos genes (renglones) y a todas las columnas. También podríamos darle un vector de caracteres, en este caso sería rse[c(“gene_1,” “gene_2”)].<br />
 Con el segundo comando accesamos a todos los genes (renglones) y únicamente a las columnas A, D, y F. También podemos darle números, para las columnas, por ejemplo 1:3 nos daría las columnas A,B,y C. </span></p>
-<p><span style="color:#1A5276"> Podemos accesar nuestra variable de tratamiento con <code>rse$Treatment</code>. Con <code>rse[, rse$Treatment == &quot;Input&quot;]</code> podemos acceder a nuestras muestras input.</span></p>
+<p><span style="color:#E67E22"> Podemos accesar nuestra variable de tratamiento con <code>rse$Treatment</code>. Con <code>rse[, rse$Treatment == &quot;Input&quot;]</code> podemos acceder a nuestras muestras input.</span></p>
 <hr />
 </div>
 <div id="isee" class="section level2">
@@ -423,13 +423,13 @@ library(&quot;iSEE&quot;)
 iSEE::iSEE(rse)</code></pre>
 <div id="información-en-isee." class="section level3">
 <h3>Información en iSEE.</h3>
-<p><span style="color:#1A5276"> - Row data table 1: Nos da la información de los genes, con las variables que tenía nuestro objeto. Es interactiva y podemos buscar por nombre.</span><br />
-<span style="color:#1A5276"> - Feature assay plot: Muestra información de un solo gen, a lo largo de las muestras. Nos da una gráfica estilo violín. Podemos recibir los datos de row data table 1, para que no sea tan difícilo buscar manualmente. Podemos agregar información de diferentes variables.</span><br />
-<span style="color:#1A5276"> - Column data plot 1: Grafica las variables que tenemos de nuestras muestras.</span><br />
-<span style="color:#1A5276"> - Row data plot 1: Grafica información de la tabla de genes. </span><br />
-<span style="color:#1A5276"> - Sample assay plot 1: Muestra niveles de expresión a lo largo de una sola muestra, de todos los genes.</span><br />
-<span style="color:#1A5276"> - Column data table 1: Explorar muestras. </span><br />
-<span style="color:#1A5276"> - Complex heatmap: Tenemos uno o más genes e información de las muestras. </span></p>
+<p><span style="color:#E67E22"> - Row data table 1: Nos da la información de los genes, con las variables que tenía nuestro objeto. Es interactiva y podemos buscar por nombre.</span><br />
+<span style="color:#E67E22"> - Feature assay plot: Muestra información de un solo gen, a lo largo de las muestras. Nos da una gráfica estilo violín. Podemos recibir los datos de row data table 1, para que no sea tan difícilo buscar manualmente. Podemos agregar información de diferentes variables.</span><br />
+<span style="color:#E67E22"> - Column data plot 1: Grafica las variables que tenemos de nuestras muestras.</span><br />
+<span style="color:#E67E22"> - Row data plot 1: Grafica información de la tabla de genes. </span><br />
+<span style="color:#E67E22"> - Sample assay plot 1: Muestra niveles de expresión a lo largo de una sola muestra, de todos los genes.</span><br />
+<span style="color:#E67E22"> - Column data table 1: Explorar muestras. </span><br />
+<span style="color:#E67E22"> - Complex heatmap: Tenemos uno o más genes e información de las muestras. </span></p>
 <ul>
 <li><h2 id="ejercicio-con-spatiallibd">Ejercicio con spatialLIBD</h2></li>
 <li>Vamos a descargar datos de un objeto <code>SingleCellExperiment</code> que es similar a uno de <code>SummarizedExperiment</code>.
@@ -444,7 +444,7 @@ iSEE::iSEE(rse)</code></pre>
 <pre class="r"><code>## Descarguemos unos datos de spatialLIBD
 sce_layer &lt;- spatialLIBD::fetch_data(&quot;sce_layer&quot;)</code></pre>
 <pre><code>## snapshotDate(): 2021-10-19</code></pre>
-<pre><code>## 2022-02-05 11:59:09 loading file C:\Users\surface\AppData\Local/R/cache/R/BiocFileCache/23ac21ec48fa_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</code></pre>
+<pre><code>## 2022-02-05 19:01:34 loading file C:\Users\surface\AppData\Local/R/cache/R/BiocFileCache/23ac21ec48fa_Human_DLPFC_Visium_processedData_sce_scran_sce_layer_spatialLIBD.Rdata%3Fdl%3D1</code></pre>
 <pre class="r"><code>sce_layer</code></pre>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 22331 76 
@@ -469,10 +469,10 @@ lobstr::obj_size(sce_layer) / 1024^2 ## Convertir a MB</code></pre>
 <ul>
 <li><p>Descarga un PDF que reproduzca la imagen del lado derecho de la siguiente diapositiva. Incluye ese PDF en tu repositorio de notas del curso.</p></li>
 <li><p>Explora en con un <em>heatmap</em> la expresión de los genes <code>MOBP</code>, <code>MBP</code> y <code>PCP4</code>. Si hacemos un <em>clustering</em> (agrupamos los genes), ¿cúales genes se parecen más?<br />
-<span style="color:#1A5276"> MOBP y MBP son más similares.</span><br />
+<span style="color:#E67E22"> MOBP y MBP son más similares.</span><br />
 </p></li>
 <li><p>¿En qué capas se expresan más los genes <em>MOBP</em> y <em>MBP</em>?<br />
-<span style="color:#1A5276"> En la capa white matter, porque son genes marcadores de glía.&gt;/span&gt;</p></li>
+<span style="color:#E67E22"> En la capa white matter, porque son genes marcadores de glía.&gt;/span&gt;</p></li>
 </ul>
 <pre><code>ENSG00000168314
 ENSG00000183036

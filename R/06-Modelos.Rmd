@@ -18,7 +18,7 @@ mat <- with(trees, model.matrix(log(Volume) ~ log(Height) + log(Girth)))
 mat
 colnames(mat)
 ```
-<span style="color:#1A5276"> Beta 1 es el cambio promedio en Y por cada incremento de una unidad en la variable x. 
+<span style="color:#E67E22"> Beta 1 es el cambio promedio en Y por cada incremento de una unidad en la variable x. 
 Por cada incremento de 1 en el eje x aumenta el valor de Y. </span>
 
 
@@ -28,14 +28,14 @@ Por cada incremento de 1 en el eje x aumenta el valor de Y. </span>
 summary(lm(log(Volume) ~ log(Height) + log(Girth), data = trees))
 ```
 
-<span style="color:#1A5276"> Cuando hacemos un modelo de expresión diferencial, si tenemos mil genes, vamos a hacer mil regresiones lineales. Como esto resultaría en muchas tablitas, únicamente extraeremos la información de un solo coeficiente (por ejemplo ```log Height``` en este caso).</span>  
+<span style="color:#E67E22"> Cuando hacemos un modelo de expresión diferencial, si tenemos mil genes, vamos a hacer mil regresiones lineales. Como esto resultaría en muchas tablitas, únicamente extraeremos la información de un solo coeficiente (por ejemplo ```log Height``` en este caso).</span>  
 
 ## ExploreModelMatrix
 
 * Es un paquete de Bioconductor que nos ayuda a entender los modelos estadísticos que estamos usando gracias a visualizaciones http://www.bioconductor.org/packages/ExploreModelMatrix/ que está descrito en el siguiente artículo
 * Revisaremos los ejemplos en http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html
 
-<span style="color:#1A5276"> Nos da una interfaz gráfica que nos ayuda a entender de mejor manera los modelos de regresión lineal.  
+<span style="color:#E67E22"> Nos da una interfaz gráfica que nos ayuda a entender de mejor manera los modelos de regresión lineal.  
 Modelo no full rank: Existen casos en donde no tenemos observaciones. 
 La interpretación para aislar alguno de los coeficientes es "dejarlo solito". Esto lo podemos lograr restando columnas y filas de la matriz. </span>
 
@@ -70,7 +70,7 @@ app <- ExploreModelMatrix(
 if (interactive()) shiny::runApp(app)
 ```
 
-<span style="color:#1A5276"> Podemos "restar cuadrantes" para quedarnos solo con los coeficientes que necesitemos para dar una interpretación.</span> 
+<span style="color:#E67E22"> Podemos "restar cuadrantes" para quedarnos solo con los coeficientes que necesitemos para dar una interpretación.</span> 
 
 ### Ejemplo 2
 
@@ -84,12 +84,12 @@ http://bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/
 
 * Interpreta `ResponseResistant.Treatmentpre` del ejercicio 2. Puede ser útil tomar un _screenshot_ (captura de pantalla) y anotarla con líneas de colores. Si haces eso, puedes incluir la imagen en tus notas.
 
-<span style="color:#1A5276"> Podemos aislar `ResponseResistant.Treatmentpre` restando las columnas 1 y 2, pero solo en el escenario en el que la respuesta es igual a resistente.</span>
+<span style="color:#E67E22"> Podemos aislar `ResponseResistant.Treatmentpre` restando las columnas 1 y 2, pero solo en el escenario en el que la respuesta es igual a resistente.</span>
 ![](../figuras/Ejercicio1_modelos.jpeg)
 
 
 * ¿Por qué es clave el `0` al inicio de la fórmula en el ejercicio 3?
-<span style="color:#1A5276"> Al añadir el cero cambia la interpretación de los batches. Si queremos incluir cada uno de los batches es necesario incluir el 0+, si quisiéramos hacerlos relativos contra el batch 1, quitamos el 0+. </span>   
+<span style="color:#E67E22"> Al añadir el cero cambia la interpretación de los batches. Si queremos incluir cada uno de los batches es necesario incluir el 0+, si quisiéramos hacerlos relativos contra el batch 1, quitamos el 0+. </span>   
 
 ### Para aprender más
 
@@ -252,7 +252,7 @@ mod <- model.matrix(~ prenatal + sra_attribute.RIN + sra_attribute.sex + assigne
 )
 colnames(mod)
 ```
-<span style="color:#1A5276"> En este caso, una de las columnas se llamna "prenatalprenatal" porque tenemos una variable que se llama "prenatal" que tiene dos opciones: pre y postnatal, si las ordenamos en orden alfabético va a ir primero postnatal, entonces será el valor de referencia. Este coeficiente nos muestra la diferencia de prenatal - postnatal. Nos está mostrando el contraste, no el grupo de referencia. </span>  
+<span style="color:#E67E22"> En este caso, una de las columnas se llamna "prenatalprenatal" porque tenemos una variable que se llama "prenatal" que tiene dos opciones: pre y postnatal, si las ordenamos en orden alfabético va a ir primero postnatal, entonces será el valor de referencia. Este coeficiente nos muestra la diferencia de prenatal - postnatal. Nos está mostrando el contraste, no el grupo de referencia. </span>  
 
 Ya teniendo el modelo estadístico, podemos usar `limma` para realizar el análisis de expresión diferencial como tal.
 

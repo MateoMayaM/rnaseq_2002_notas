@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Datos de RNA-seq a través de recount3
 
-<span style="color:#1A5276">Son datos procesados de manera uniforme.  
+<span style="color:#E67E22">Son datos procesados de manera uniforme.  
 Con el study explorer podemos encontrar sets de datos que nos interesen.  
 Democratiza el acceso a los datos.</span>   
 
@@ -78,7 +78,7 @@ colData(rse_gene_SRP009615)[
 ]
 ```
 
-<span style="color:#1A5276">Las dos funciones más importantes al descargar datos de recount3 son ```compute_read_counts``` y ```expand_sra_attributes```</span>  
+<span style="color:#E67E22">Las dos funciones más importantes al descargar datos de recount3 son ```compute_read_counts``` y ```expand_sra_attributes```</span>  
 
 Ahora estamos listos para usar otras herramientas para el análisis de los datos.
 
@@ -87,7 +87,7 @@ Ahora estamos listos para usar otras herramientas para el análisis de los datos
 
 * Utiliza `iSEE` para reproducir la siguiente imagen
 ```iSEE::iSEE(rse_gene_SRP009615)```  
-<span style="color:#1A5276">La imagen está en ISEE_exports/FeatureAssayPlot1.pdf </span>
+<span style="color:#E67E22">La imagen está en ISEE_exports/FeatureAssayPlot1.pdf </span>
 
 * Pistas:
     - Utiliza el _dynamic feature selection_

@@ -171,7 +171,7 @@ pre code {
 
 <div id="datos-de-rna-seq-a-través-de-recount3" class="section level1">
 <h1>Datos de RNA-seq a través de recount3</h1>
-<p><span style="color:#1A5276">Son datos procesados de manera uniforme.<br />
+<p><span style="color:#E67E22">Son datos procesados de manera uniforme.<br />
 Con el study explorer podemos encontrar sets de datos que nos interesen.<br />
 Democratiza el acceso a los datos.</span></p>
 <div id="usar-recount3" class="section level2">
@@ -183,9 +183,9 @@ library(&quot;recount3&quot;)</code></pre>
 <p>Después tenemos que identificar un estudio de interes y determinar si queremos accesar la información a nivel de genes, exones, etc. Sabiendo el estudio de interes, podemos descargar los datos usando la función <code>create_rse()</code> como mostramos a continuación. <code>create_rse()</code> tiene argumentos con los cuales podemos especificar la <strong>anotación</strong> que queremos usar (las opciones dependen del organismo).</p>
 <pre class="r"><code>## Revisemos todos los proyectos con datos de humano en recount3
 human_projects &lt;- available_projects()</code></pre>
-<pre><code>## 2022-02-05 12:20:52 caching file sra.recount_project.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:20:53 caching file gtex.recount_project.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:20:55 caching file tcga.recount_project.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:02:38 caching file sra.recount_project.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:02:39 caching file gtex.recount_project.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:02:41 caching file tcga.recount_project.MD.gz.</code></pre>
 <pre class="r"><code>## Encuentra tu proyecto de interés. Aquí usaremos
 ## SRP009615 de ejemplo
 proj_info &lt;- subset(
@@ -195,17 +195,17 @@ proj_info &lt;- subset(
 ## Crea un objetio de tipo RangedSummarizedExperiment (RSE)
 ## con la información a nivel de genes
 rse_gene_SRP009615 &lt;- create_rse(proj_info)</code></pre>
-<pre><code>## 2022-02-05 12:21:10 downloading and reading the metadata.</code></pre>
-<pre><code>## 2022-02-05 12:21:11 caching file sra.sra.SRP009615.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:13 caching file sra.recount_project.SRP009615.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:14 caching file sra.recount_qc.SRP009615.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:15 caching file sra.recount_seq_qc.SRP009615.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:17 caching file sra.recount_pred.SRP009615.MD.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:17 downloading and reading the feature information.</code></pre>
-<pre><code>## 2022-02-05 12:21:18 caching file human.gene_sums.G026.gtf.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:19 downloading and reading the counts: 12 samples across 63856 features.</code></pre>
-<pre><code>## 2022-02-05 12:21:20 caching file sra.gene_sums.SRP009615.G026.gz.</code></pre>
-<pre><code>## 2022-02-05 12:21:22 construcing the RangedSummarizedExperiment (rse) object.</code></pre>
+<pre><code>## 2022-02-05 19:02:58 downloading and reading the metadata.</code></pre>
+<pre><code>## 2022-02-05 19:02:59 caching file sra.sra.SRP009615.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:00 caching file sra.recount_project.SRP009615.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:01 caching file sra.recount_qc.SRP009615.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:03 caching file sra.recount_seq_qc.SRP009615.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:04 caching file sra.recount_pred.SRP009615.MD.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:05 downloading and reading the feature information.</code></pre>
+<pre><code>## 2022-02-05 19:03:06 caching file human.gene_sums.G026.gtf.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:08 downloading and reading the counts: 12 samples across 63856 features.</code></pre>
+<pre><code>## 2022-02-05 19:03:08 caching file sra.gene_sums.SRP009615.G026.gz.</code></pre>
+<pre><code>## 2022-02-05 19:03:10 construcing the RangedSummarizedExperiment (rse) object.</code></pre>
 <pre class="r"><code>## Explora el objeto RSE
 rse_gene_SRP009615</code></pre>
 <pre><code>## class: RangedSummarizedExperiment 
@@ -266,14 +266,14 @@ colData(rse_gene_SRP009615)[
 ## SRR389084                    SL4326  Puromycin, doxycycline
 ## SRR389077                    SL1584               Puromycin
 ## SRR389078                    SL1583  Puromycin, doxycycline</code></pre>
-<p><span style="color:#1A5276">Las dos funciones más importantes al descargar datos de recount3 son <code>compute_read_counts</code> y <code>expand_sra_attributes</code></span></p>
+<p><span style="color:#E67E22">Las dos funciones más importantes al descargar datos de recount3 son <code>compute_read_counts</code> y <code>expand_sra_attributes</code></span></p>
 <p>Ahora estamos listos para usar otras herramientas para el análisis de los datos.</p>
 </div>
 <div id="ejercicio" class="section level2">
 <h2>Ejercicio</h2>
 <ul>
 <li><p>Utiliza <code>iSEE</code> para reproducir la siguiente imagen <code>iSEE::iSEE(rse_gene_SRP009615)</code><br />
-<span style="color:#1A5276">La imagen está en ISEE_exports/FeatureAssayPlot1.pdf </span></p></li>
+<span style="color:#E67E22">La imagen está en ISEE_exports/FeatureAssayPlot1.pdf </span></p></li>
 <li><p>Pistas:</p>
 <ul>
 <li>Utiliza el <em>dynamic feature selection</em></li>
