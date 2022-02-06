@@ -1,0 +1,188 @@
+---
+title: "Revisión"
+date: "4/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Revisión
+
+* ¿Debemos explorar las relaciones entre nuestras variables con información de nuestras muestras previo a hacer un análisis de expresión diferencial?  
+<span style="color:#E67E22">Sí, para saber de antemano las propiedades de nuestros datos y poder determinar el modelo estadístico que va a ser usado. </span>  
+* ¿Por qué usamos el paquete `edgeR`?  
+<span style="color:#E67E22">Para normalizar datos y poder observar la expresión diferencial. Elimina problemas como las diferentes cantidades de transcritos.</span>  
+* ¿Por qué es importante el argumento `sort.by` en `topTable()`?  
+<span style="color:#E67E22">Porque se encarga de ordenar los genes con mayores diferencias en su expresión y normalmente queremos conservar las posiciones originales, por eso le agregamos `=none`.</span>  
+* ¿Por qué es importante el argumento `coef` en `topTable()`?  
+<span style="color:#E67E22">Nos permite seleccionar el coeficiente de la variable de nuestro interés.</span>  
+
+Usemos los datos de http://research.libd.org/SPEAQeasy-example/bootcamp_intro
+
+```{r "speaqeasy_data"}
+speaqeasy_data <- file.path(tempdir(), "rse_speaqeasy.RData")
+download.file("https://github.com/LieberInstitute/SPEAQeasy-example/blob/master/rse_speaqeasy.RData?raw=true", speaqeasy_data, mode = "wb")
+library("SummarizedExperiment")
+load(speaqeasy_data, verbose = TRUE)
+rse_gene
+```
+* ¿Cuantos genes y muestras tenemos en estos datos?  
+<span style="color:#E67E22">Genes: 60,609</span>    
+<span style="color:#E67E22">Muestras: 40</span>      
+
+## Ejercicio en equipo
+
+* ¿Hay diferencias en `totalAssignedGene` o `mitoRate` entre los grupos de diagnosis (`PrimaryDx`)?
+
+```{r boxplotDx}
+library("ggplot2")
+
+ggplot(as.data.frame(colData(rse_gene)), aes(y = totalAssignedGene, x = PrimaryDx)) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    ylab("totalAssignedGene") +
+    xlab("PrimaryDx")
+```
+
+```{r boxplotmitoRate}
+library("ggplot2")
+
+ggplot(as.data.frame(colData(rse_gene)), aes(y = mitoRate, x = PrimaryDx)) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    ylab("totalAssignedGene") +
+    xlab("mitoRate")
+```
+
+
+
+* Grafica la expresión de _SNAP25_ para cada grupo de diagnosis.
+```
+# Con iSEE podemos observarla buscando el gen en row data table y moviendo parámetros del feature assay plot.
+iSEE::iSEE(rse_gene)
+```
+
+* Sugiere un modelo estadistico que podríamos usar en una análisis de expresión diferencial. Verifica que si sea un modelo _full rank_. ¿Cúal sería el o los coeficientes de interés?  
+<span style="color:#E67E22">```~PrimaryDx + BrainRegion + Sex.```</span>  
+
+## Respuestas
+
+```{r "respuestas"}
+## Exploremos la variable de PrimaryDx
+table(rse_gene$PrimaryDx)
+## Eliminemos el diagnosis "Other" porque no tiene información
+rse_gene$PrimaryDx <- droplevels(rse_gene$PrimaryDx)
+table(rse_gene$PrimaryDx)
+
+## Exploremos numéricamente diferencias entre grupos de diagnosis para
+## varias variables
+with(colData(rse_gene), tapply(totalAssignedGene, PrimaryDx, summary))
+with(colData(rse_gene), tapply(mitoRate, PrimaryDx, summary))
+
+## Podemos hacer lo mismo para otras variables
+with(colData(rse_gene), tapply(mitoRate, BrainRegion, summary))
+
+## Podemos resolver la primeras preguntas con iSEE
+if (interactive()) iSEE::iSEE(rse_gene)
+
+## O hacer graficas nosotros mismos. Aquí les muestro una posible respuesta
+## con ggplot2
+library("ggplot2")
+ggplot(
+    as.data.frame(colData(rse_gene)),
+    aes(y = totalAssignedGene, group = PrimaryDx, x = PrimaryDx)
+) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    xlab("Diagnosis")
+ggplot(
+    as.data.frame(colData(rse_gene)),
+    aes(y = mitoRate, group = PrimaryDx, x = PrimaryDx)
+) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    xlab("Diagnosis")
+
+## Otras variables
+ggplot(
+    as.data.frame(colData(rse_gene)),
+    aes(y = mitoRate, group = BrainRegion, x = BrainRegion)
+) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    xlab("Brain Region")
+
+## Encontremos el gene SNAP25
+rowRanges(rse_gene)
+## En este objeto los nombres de los genes vienen en la variable "Symbol"
+i <- which(rowRanges(rse_gene)$Symbol == "SNAP25")
+i
+
+## Para graficar con ggplot2, hagamos un pequeño data.frame
+df <- data.frame(
+    expression = assay(rse_gene)[i, ],
+    Dx = rse_gene$PrimaryDx
+)
+
+## Ya teniendo el pequeño data.frame, podemos hacer la gráfica
+ggplot(df, aes(y = log2(expression + 0.5), group = Dx, x = Dx)) +
+    geom_boxplot() +
+    theme_bw(base_size = 20) +
+    xlab("Diagnosis") +
+    ylab("SNAP25: log2(x + 0.5)")
+
+## https://bioconductor.org/packages/release/bioc/vignettes/scater/inst/doc/overview.html#3_Visualizing_expression_values
+scater::plotExpression(
+    as(rse_gene, "SingleCellExperiment"),
+    features = rownames(rse_gene)[i],
+    x = "PrimaryDx",
+    exprs_values = "counts",
+    colour_by = "BrainRegion",
+    xlab = "Diagnosis"
+)
+
+## Para el model estadístico exploremos la información de las muestras
+colnames(colData(rse_gene))
+
+## Podemos usar región del cerebro porque tenemos suficientes datos
+table(rse_gene$BrainRegion)
+
+## Pero no podemos usar "Race" porque son solo de 1 tipo
+table(rse_gene$Race)
+
+## Ojo! Acá es importante que hayamos usado droplevels(rse_gene$PrimaryDx)
+## si no, vamos a tener un modelo que no sea _full rank_
+mod <- with(
+    colData(rse_gene),
+    model.matrix(~ PrimaryDx + totalAssignedGene + mitoRate + rRNA_rate + BrainRegion + Sex + AgeDeath)
+)
+
+## Exploremos el modelo de forma interactiva
+if (interactive()) {
+    ## Tenemos que eliminar columnas que tienen NAs.
+    info_no_NAs <- colData(rse_gene)[, c(
+        "PrimaryDx", "totalAssignedGene", "rRNA_rate", "BrainRegion", "Sex",
+        "AgeDeath", "mitoRate", "Race"
+    )]
+    ExploreModelMatrix::ExploreModelMatrix(
+        info_no_NAs,
+        ~ PrimaryDx + totalAssignedGene + mitoRate + rRNA_rate + BrainRegion + Sex + AgeDeath
+    )
+
+    ## Veamos un modelo más sencillo sin las variables numéricas (continuas) porque
+    ## ExploreModelMatrix nos las muestra como si fueran factors (categoricas)
+    ## en vez de continuas
+    ExploreModelMatrix::ExploreModelMatrix(
+        info_no_NAs,
+        ~ PrimaryDx + BrainRegion + Sex
+    )
+
+    ## Si agregamos + Race nos da errores porque Race solo tiene 1 opción
+    # ExploreModelMatrix::ExploreModelMatrix(
+    #     info_no_NAs,
+    #     ~ PrimaryDx + BrainRegion + Sex + Race
+    # )
+}
+```
